@@ -193,7 +193,7 @@ export function register (options: Options = {}): () => Register {
 
     // Render the configuration errors and exit the script.
     if (configDiagnostics.length) {
-      throw new TSError(formatDiagnostics(configDiagnostics, cwd, ts, 0))
+      logDiagnostics(configDiagnostics, cwd, ts, 0)
     }
 
     // Enable `allowJs` when flag is set.
@@ -235,7 +235,7 @@ export function register (options: Options = {}): () => Register {
         []
 
       if (diagnosticList.length) {
-        throw new TSError(formatDiagnostics(diagnosticList, cwd, ts, lineOffset))
+        logDiagnostics(diagnosticList, cwd, ts, lineOffset)
       }
 
       return [result.outputText, result.sourceMapText as string]
@@ -306,7 +306,7 @@ export function register (options: Options = {}): () => Register {
         const diagnosticList = filterDiagnostics(diagnostics, ignoreWarnings, disableWarnings)
 
         if (diagnosticList.length) {
-          throw new TSError(formatDiagnostics(diagnosticList, cwd, ts, lineOffset))
+          logDiagnostics(diagnosticList, cwd, ts, lineOffset)
         }
 
         if (output.emitSkipped) {
@@ -599,8 +599,8 @@ function filterDiagnostics (diagnostics: TS.Diagnostic[], ignore: number[], disa
 /**
  * Format an array of diagnostics.
  */
-export function formatDiagnostics (diagnostics: TS.Diagnostic[], cwd: string, ts: TSCommon, lineOffset: number) {
-  return diagnostics.map(x => formatDiagnostic(x, cwd, ts, lineOffset))
+export function logDiagnostics (diagnostics: TS.Diagnostic[], cwd: string, ts: TSCommon, lineOffset: number) {
+  return diagnostics.forEach(x => console.log(formatDiagnostic(x, cwd, ts, lineOffset).message))
 }
 
 /**
