@@ -1,5 +1,5 @@
 {
-  "name": "ts-node",
+  "name": "@alexanderGugel/ts-node",
   "version": "1.6.0",
   "preferGlobal": true,
   "description": "TypeScript execution environment and REPL for node",
